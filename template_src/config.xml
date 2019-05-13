@@ -17,19 +17,19 @@
  specific language governing permissions and limitations
  under the License.
  -->
-<widget id="com.example.template" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <preference name="android-minSdkVersion" value="19" />
+<widget id="com.example.template" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:dist="http://schemas.android.com/apk/distribution">
     <preference name="DisallowOverscroll" value="true" />
     <hook src="hooks/hookers.js" type="before_prepare" />
     <hook src="hooks/beforedep.js" type="before_deploy" />
-    <name>Cordova - Framework7 - Vue - Webpack Template</name>
-    <description>
-        Brand new cordova project!
-    </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <name>Cordova template for games</name>
+    <author email="kooolgames36@gmail.com" href="https://funtraker.com">
+        GamesLab
     </author>
+    <description>
+       Brand new game!
+    </description>
     <content src="index.html" />
+
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -38,12 +38,41 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="enabled" value="true" />
+        <preference name="Fullscreen" value="true" />
+        <preference name="Orientation" value="landscape" />
+        <preference default="16.0.+" name="FIREBASE_CORE_VERSION" />
+        <resource-file src="google-services.json" target="app/google-services.json" />
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/supports-screens">
+            <dist:module dist:instant="true" />
+            <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:resizeable="false" android:smallScreens="true" android:xlargeScreens="true" />
+        </edit-config>
     </platform>
-    <platform name="ios">
-        <splash src="res/screen/ios/Default@2x~universal~anyany.png" />
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
-    </platform>
+
+    <cryptfiles>
+        <include>
+            <file regex="(bundle|index).(htm|html|js)$" />
+        </include>
+        <exclude>
+        </exclude>
+    </cryptfiles>
+
+    <plugin name="cordova-plugin-firebase-analytics" spec="^1.0.1">
+        <variable name="FIREBASE_CORE_VERSION" value="16.0.+" />
+    </plugin>
+    <plugin name="cordova-plugin-google-analytics" spec="^1.8.6">
+        <variable name="GMS_VERSION" value="16.0.+" />
+    </plugin>
+    <plugin name="cordova-android-support-gradle-release" spec="^2.0.1">
+        <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
+    </plugin>
+    <plugin name="cordova-admob-plus" spec="^0.19.1">
+        <variable name="APP_ID_ANDROID" value="ADMOB_APP_ID" />
+        <variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+    </plugin>
+    <plugin name="cordova-plugin-crypt-file-ng" spec="https://github.com/naveed-ahmad/cordova-plugin-crypt-file" />
+
 </widget>

@@ -2,9 +2,8 @@ const path = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-const entryFile = path.join(__dirname + '/../src/main.js');
+const entryFile = path.join(__dirname + '/../src/index.js');
 
 module.exports = function (options) {
   return {
@@ -15,11 +14,8 @@ module.exports = function (options) {
       extensions: ['.js', '.json', '.vue'],
       modules: [path.join(__dirname, '../src'), 'node_modules'],
       alias: {
-        'vue$': 'vue/dist/vue.common.js',
         'src': path.resolve(__dirname, '../src/'),
-        'assets': path.resolve(__dirname, '../src/assets/'),
-        'pages': path.resolve(__dirname, '../src/assets/vue/pages/'),
-        'components': path.resolve(__dirname, '../src/assets/vue/components/')
+        'assets': path.resolve(__dirname, '../src/assets/')
       }
     },
 
@@ -59,24 +55,8 @@ module.exports = function (options) {
           loader: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax']
         },
         {
-          test: /\.vue$/,
-          exclude: /node_modules/,
-          loader: 'vue-loader',
-          options: {
-            loaders: {
-              js: {
-                loader: 'babel-loader',
-                options: {
-                  presets: ['env'],
-                  plugins: ['transform-object-rest-spread']
-                }
-              }
-            }
-          }
-        },
-        {
           test: /\.js$/,
-          exclude: /node_modules(\/|\\)(?!(framework7|framework7-vue|template7|dom7)(\/|\\)).*/,
+          exclude: /node_modules(\/|\\)(\/|\\).*/,
           use: {
             loader: 'babel-loader',
             options: {
@@ -96,7 +76,7 @@ module.exports = function (options) {
       }),
       new HtmlWebpackPlugin({
         filename: 'index.html',
-        template: 'src/index.ejs',
+        template: 'src/index.html',
         platform: process.argv.length > 5 ? process.argv[5].replace(/[- ]/g, '') : "",
         inject: true,
         minify: {
@@ -108,8 +88,7 @@ module.exports = function (options) {
           collapseWhitespace: true,
           minifyCSS: true
         }
-      }),
-      new VueLoaderPlugin()
+      })
     ]
   }
 }
